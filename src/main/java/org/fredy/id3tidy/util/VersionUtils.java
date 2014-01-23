@@ -34,7 +34,7 @@ import org.fredy.id3tidy.ID3TidyVersionException;
  * @author fredy
  */
 public class VersionUtils {
-    private static final String UPDATE_URL = "http://id3tidy.googlecode.com/svn/trunk/VERSION.txt";
+    private static final String UPDATE_URL = "https://raw.github.com/fredyw/id3tidy/master/VERSION.txt";
     
     private VersionUtils() {
     }
