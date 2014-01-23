@@ -1,0 +1,5 @@
+#EXTM3U
+#EXTINF:2345,Title1 - Artist1
+/home/whoever/whatever1.mp3
+#EXTINF:2345,Title2 - Artist2
+/home/whoever/whatever2.mp3

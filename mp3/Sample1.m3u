@@ -1,0 +1,7 @@
+#EXTM3U
+#EXTINF:2,My_Title - My_Artist
+My_Artist - My_Title.mp3
+#EXTINF:2,Your Title - Your Artist
+Your Artist - Your Title.mp3
+#EXTINF:2,Your Title - Your Artist
+/somewhereintheuniverse/unknown.mp3

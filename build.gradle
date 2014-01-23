@@ -1,0 +1,37 @@
+apply plugin: "java"
+apply plugin: "eclipse"
+
+defaultTasks = ["clean", "test", "jar"]
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+def getVersion() {
+    def versionPrefix = "version="
+    def version = ""
+    new File("src/main/resources/id3tidy.properties").eachLine {
+        if (!it.startsWith(versionPrefix)) return
+        version = it.substring(versionPrefix.size())
+    }
+    return version
+}
+
+version = getVersion()
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org:jaudiotagger:2.0.3"
+    compile "com.miglayout:miglayout:3.7.4"
+    compile "com.jgoodies:looks:2.2.2"
+    
+    testCompile "junit:junit:4.10"
+}
+
+jar {
+    dependsOn configurations.runtime
+    from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest { attributes "Main-Class": "org.fredy.id3tidy.ui.ID3TidyUI" }
+}
