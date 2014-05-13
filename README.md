@@ -16,7 +16,7 @@ The JAR will be created in build/libs directory.
 
 Download
 --------
-https://raw.github.com/fredyw/id3tidy/master/id3tidy.jar
+https://github.com/fredyw/id3tidy/releases
 
 Screenshot
 ----------

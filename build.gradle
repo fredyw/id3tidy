@@ -17,6 +17,9 @@ def getVersion() {
 }
 
 version = getVersion()
+new File("VERSION.txt").withWriter { out ->
+    out.writeLine(version)
+} 
 
 repositories {
     mavenCentral()

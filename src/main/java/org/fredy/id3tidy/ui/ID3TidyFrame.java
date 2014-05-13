@@ -454,22 +454,34 @@ public class ID3TidyFrame extends JFrame {
         }
 
         private void updateFileList() {
-            if (fileList.getSelectedIndex() == -1) {
-                return;
-            }
-            File selectedFile = fileListModel.getElementAt(fileList.getSelectedIndex());
-            try {
-                ID3Tag tag = ID3Tidy.read(selectedFile);
-                id3TagEditorPanel.updateTextFields(tag);
-            } catch (ID3TidyException e) {
-                showErrorMessage(String.format(
-                    rb.getString(ResourceBundleKey.ERROR_UNABLE_TO_READ.toString()),
-                    selectedFile));
-                logger.severe(e.getMessage());
-            } catch (Exception e) {
-                logger.severe(e.getMessage());
-                e.printStackTrace();
-            }
+            new SwingWorker<Void, Void>() {
+                private ID3Tag tag;
+                @Override
+                protected Void doInBackground() throws Exception {
+                    if (fileList.getSelectedIndex() == -1) {
+                        return null;
+                    }
+                    File selectedFile = fileListModel.getElementAt(fileList.getSelectedIndex());
+                    try {
+                        tag = ID3Tidy.read(selectedFile);
+                    } catch (ID3TidyException e) {
+                        showErrorMessage(String.format(
+                            rb.getString(ResourceBundleKey.ERROR_UNABLE_TO_READ.toString()),
+                            selectedFile));
+                        logger.severe(e.getMessage());
+                    } catch (Exception e) {
+                        logger.severe(e.getMessage());
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+
+                protected void done() {
+                    if (tag != null) {
+                        id3TagEditorPanel.updateTextFields(tag);
+                    }
+                }
+            }.execute();
         }
         
         private void initComponents() {
@@ -503,7 +515,7 @@ public class ID3TidyFrame extends JFrame {
             fileList.setBorder(BorderFactory.createEtchedBorder());
             fileList.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent evt) {
+                public void mousePressed(MouseEvent e) {
                     updateFileList();
                 }
             });
